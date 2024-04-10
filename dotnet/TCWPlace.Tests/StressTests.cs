@@ -9,11 +9,12 @@ namespace TCWPlace.Tests
         {
         }
 
-        [TestCase("https://localhost:7252")]
-        [TestCase("http://localhost:3000")]
+        [TestCase("http://localhost:3000")] // node.js
+        [TestCase("http://localhost:5057")] // dotnet Debug
+        [TestCase("http://localhost:5000")] // dotnet Release
         public async Task Get(string endpoint)
         {
-            var testDuration = TimeSpan.FromSeconds(10);
+            var testDuration = TimeSpan.FromSeconds(15);
 
             var httpClient = new HttpClient();
 
@@ -36,12 +37,15 @@ namespace TCWPlace.Tests
             await Console.Out.WriteLineAsync($"Endpoint: {endpoint}");
             await Console.Out.WriteLineAsync($"Test duration: {testDuration.TotalSeconds} s");
             await Console.Out.WriteLineAsync($"Number of requests: {requestDurations.Count}");
+            await Console.Out.WriteLineAsync($"Min request duration: {requestDurations.Min(d => d.TotalMilliseconds)} ms");
+            await Console.Out.WriteLineAsync($"Max request duration: {requestDurations.Max(d => d.TotalMilliseconds)} ms");
             await Console.Out.WriteLineAsync($"Avg request duration: {requestDurations.Average(d => d.TotalMilliseconds)} ms");
             await Console.Out.WriteLineAsync($"Requests per second: {requestDurations.Count / testDuration.TotalSeconds}");
         }
 
-        [TestCase("https://localhost:7252")]
-        [TestCase("http://localhost:3000")]
+        [TestCase("http://localhost:3000")] // node.js
+        [TestCase("http://localhost:5057")] // dotnet Debug
+        [TestCase("http://localhost:5000")] // dotnet Release
         public async Task Change(string endpoint)
         {
             var httpClient = new HttpClient();
@@ -71,6 +75,8 @@ namespace TCWPlace.Tests
             await Console.Out.WriteLineAsync($"Endpoint: {endpoint}");
             await Console.Out.WriteLineAsync($"Test duration: {totalDurationWatch.Elapsed.TotalSeconds} s");
             await Console.Out.WriteLineAsync($"Number of requests: {requestDurations.Count}");
+            await Console.Out.WriteLineAsync($"Min request duration: {requestDurations.Min(d => d.TotalMilliseconds)} ms");
+            await Console.Out.WriteLineAsync($"Max request duration: {requestDurations.Max(d => d.TotalMilliseconds)} ms");
             await Console.Out.WriteLineAsync($"Avg request duration: {requestDurations.Average(d => d.TotalMilliseconds)} ms");
             await Console.Out.WriteLineAsync($"Requests per second: {requestDurations.Count / totalDurationWatch.Elapsed.TotalSeconds}");
         }
