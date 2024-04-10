@@ -1,0 +1,11 @@
+@TCWPlace.API_HostAddress = http://localhost:5057
+
+GET {{TCWPlace.API_HostAddress}}/get
+Accept: application/json
+
+###
+
+GET {{TCWPlace.API_HostAddress}}/change?x=0&y=0&col=ff0000
+Accept: application/json
+
+###
